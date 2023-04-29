@@ -297,7 +297,32 @@ loglevel = 4
     # flow control can be useful. By default
     # it is disabled.
     flow_control = False
-    
+
+
+  # Here's an example of how to add a LoRa interface
+  # using a Semtech SX1276 transceiver connected
+  # directly to SPI and GPIO interfaces on Linux.
+
+  [[SX1276 Radio Interface]]
+    type = RadioInterface
+
+    # Enable interface if you want to use it!
+    enabled = No
+
+    # Set the type of the radio transceiver.
+    radio_type = SX1276Radio
+
+    [[[params]]]
+      spi_path = /dev/spidev0.0
+      gpio_path = /dev/gpiochip1
+      rst_pin = 16
+      dio0_pin = 19
+
+      frequency = 433000000
+      bandwidth = 125000
+      spreading_factor = 8
+      coding_rate = 5
+      tx_power = 15
     
   # An example KISS modem interface. Useful for running
   # Reticulum over packet radio hardware.

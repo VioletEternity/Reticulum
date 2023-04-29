@@ -867,6 +867,35 @@ class Reticulum:
                                     else:
                                         interface.ifac_size = 8
 
+                                if c["type"] == "RadioInterface":
+                                    radio_type = c["radio_type"] if "radio_type" in c else None
+                                    params = dict(**c["params"]) if "params" in c else {}
+
+                                    if radio_type == None:
+                                        raise ValueError("No radio type specified for radio interface")
+
+                                    interface = RadioInterface.RadioInterface(
+                                        RNS.Transport,
+                                        name,
+                                        radio_type = radio_type,
+                                        params = params
+                                    )
+
+                                    if "outgoing" in c and c.as_bool("outgoing") == False:
+                                        interface.OUT = False
+                                    else:
+                                        interface.OUT = True
+
+                                    interface.mode = interface_mode
+
+                                    interface.announce_cap = announce_cap
+                                    if configured_bitrate:
+                                        interface.bitrate = configured_bitrate
+                                    if ifac_size != None:
+                                        interface.ifac_size = ifac_size
+                                    else:
+                                        interface.ifac_size = 8
+
                                 if interface != None:
                                     interface.announce_rate_target = announce_rate_target
                                     interface.announce_rate_grace = announce_rate_grace
